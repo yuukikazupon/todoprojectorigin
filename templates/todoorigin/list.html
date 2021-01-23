@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block header %}
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">ToDoList</h1>
+        <p class="lead">スケジュール管理をしよう</p>
+      </div>
+    </div>
+{% endblock header %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+
+{%for item in todo_list %}
+<div class = "container">
+  <div class="alert alert-{{ item.priority }}" role="alert">
+    <p>{{ item.title }} 期限：{{ item.duedate }}</p>
+
+    <a href="{% url 'detail' item.pk %}" class="btn btn-primary" role="button" aria-pressed="true">詳細</a>
+    <a href="{% url 'update' item.pk %}" class="btn btn-success " role="button" aria-pressed="true">編集</a>
+    <a href="{% url 'delete' item.pk %}" class="btn btn-warning" role="button" aria-pressed="true">削除</a>
+  </div>
+ </div>
+
+{% endfor %}
+{% endif %}
+
+
+<p><a href="{% url 'create' %}">新規登録</a></p>
+<p><a href="{% url 'logout' %}">ログアウト</a></p>
+
+ <nav aria-label="Page navigation">
+   <ul class= "pagination">
+     {% if page_obj.has_previous %}
+     <li>
+       <a href= "?page={{ page_obj.previous_page_number }}" aria-label= "Previous" >
+         <span aria-hidden= "true" > &laquo; </span>
+       </a>
+     </li>
+     {% endif %}
+     {% for page in paginator.page_range %}
+     <li {% if page == page_obj.number %} class = "active" {% endif %}><a href= "?page={{ page }}" >{{ page }} </a></li>
+
+
+     {% endfor %}
+     {% if page_obj.has_next %}
+     <li>
+       <a href= "?page={{ page_obj.next_page_number}}" aria-label= "Next" >
+         <span aria-hidden= "true" > &raquo; </span>
+       </a>
+     </li>
+     {% endif %}
+   </ul>
+ </nav>
+{% endblock content %}

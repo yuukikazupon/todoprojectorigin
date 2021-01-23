@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block header %}
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">ToDoList</h1>
+        <p class="lead">スケジュール管理をしよう</p>
+      </div>
+    </div>
+{% endblock header %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<h1>todolistの{{ object|yesno:"更新,作成" }}</h1>
+<form action='' method='POST'>{% csrf_token %}
+{{ form.as_p }}
+
+  <input type="submit" value ='{{ object|yesno:"更新,作成" }}'>
+</form>
+
+<p><a href="{% url 'list' %}">一覧</a></p>
+
+{% endif %}
+{% endblock content %}

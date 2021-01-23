@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block header %}
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">ToDoList</h1>
+        <p class="lead">スケジュール管理をしよう</p>
+      </div>
+    </div>
+{% endblock header %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="spinner-border text-primary" role="status">
+</div>
+<div class = container>
+<div class="p-3 mb-2 bg-info text-white">
+<p>タイトル:{{ todo_detail.title }}</p>
+<p>内容:{{ todo_detail.memo }}</p>
+<p>期限:{{ todo_detail.duedate }}</p>
+</div>
+</div>
+
+
+
+<a href="{% url 'list' %}">一覧</a>
+
+{% endif %}
+{% endblock content %}
